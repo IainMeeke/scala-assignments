@@ -9,45 +9,39 @@ object Main {
       println()
     }
     println("balanced:")
-    println(balance("(()))".toList))
+    println(balance("(()()()(()))".toList)) //true
+    println(balance("(if (zero? x) max (/ 1 x))".toList)) //true
+    println(balance("I told him (that it’s not (yet) done). (But he wasn’t listening)".toList)) //true
+    println(balance(":-)".toList)) //false
+    println(balance("())(".toList)) //false
+    println(balance("()))()".toList)) //false
   }
 
   /**
-   * Exercise 1
-   */
-    def pascal(c: Int, r: Int): Int = if (c == 0 || r == 0 || c == r) 1 else pascal(c-1, r-1) + pascal (c, r-1)
-  
+    * Exercise 1
+    */
+  def pascal(c: Int, r: Int): Int = if (c == 0 || r == 0 || c == r) 1 else pascal(c - 1, r - 1) + pascal(c, r - 1)
+
   /**
-   * Exercise 2
-   */
-//    def balance(chars: List[Char]): Boolean = {
-//      def isMatched(chars: List[Char], b: Char): Boolean = {
-//        if(chars.isEmpty) false
-//        else if(b == '(' && chars.head == ')') true
-//        else isMatched(chars.tail, b)
-//      }
-//      if(chars.head == '(') isMatched(chars.tail, chars.head)
-//      else balance(chars.tail)
-//    }
-//  def balance(chars: List[Char]): Boolean = {
-//  def oneMatch(b: Char, chars: List[Char]): Boolean = {
-//    if (b == '(') {
-//      if (chars.tail.isEmpty && chars.head == ')') true else oneMatch(b, chars.tail)
-//    }
-//    else {
-//      if(chars.isEmpty) false else oneMatch(chars.head, chars.tail)
-//    }
-//  }
-//  oneMatch(chars.head, chars.tail)
-def balance(chars: List[Char]): Boolean = {
-  def oneMatch(b: Char, chars: List[Char]): Boolean = {
-    
+    * Exercise 2
+    */
+  def balance(chars: List[Char]): Boolean = {
+    def loop(b: Int, chars: List[Char]): Boolean = {
+      if (b < 0) false else if (chars.isEmpty && b == 0) true
+      else {
+        chars.head match {
+          case '(' => loop(b + 1, chars.tail)
+          case ')' => loop(b - 1, chars.tail)
+          case _ => loop(b, chars.tail)
+        }
+      }
+    }
+
+    loop(0, chars)
+  }
+
+  /**
+    * Exercise 3
+    */
+  def countChange(money: Int, coins: List[Int]): Int = ???
 }
-
-
-  
-  /**
-   * Exercise 3
-   */
-    def countChange(money: Int, coins: List[Int]): Int = ???
-  }
