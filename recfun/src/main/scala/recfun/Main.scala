@@ -8,13 +8,14 @@ object Main {
         print(pascal(col, row) + " ")
       println()
     }
-    println("balanced:")
-    println(balance("(()()()(()))".toList)) //true
-    println(balance("(if (zero? x) max (/ 1 x))".toList)) //true
-    println(balance("I told him (that it’s not (yet) done). (But he wasn’t listening)".toList)) //true
-    println(balance(":-)".toList)) //false
-    println(balance("())(".toList)) //false
-    println(balance("()))()".toList)) //false
+//    println("balanced:")
+//    println(balance("(()()()(()))".toList)) //true
+//    println(balance("(if (zero? x) max (/ 1 x))".toList)) //true
+//    println(balance("I told him (that it’s not (yet) done). (But he wasn’t listening)".toList)) //true
+//    println(balance(":-)".toList)) //false
+//    println(balance("())(".toList)) //false
+//    println(balance("()))()".toList)) //false
+    println(countChange(4, List(2,1)))
   }
 
   /**
@@ -43,5 +44,15 @@ object Main {
   /**
     * Exercise 3
     */
-  def countChange(money: Int, coins: List[Int]): Int = ???
+  def countChange(money: Int, coins: List[Int]): Int = {
+    def loop(money: Int, counting: Int, coins: List[Int]): Int = {
+      if(coins.isEmpty) 0
+      else if(counting <= 0) 0
+      else if((counting - coins.head) == 0) 1 + loop(money, money, coins.tail) + loop(money,money-coins.head, coins.tail)
+      else if((counting - coins.head) > 0) loop(money, counting - coins.head, coins)
+      else if((counting - coins.head) < 0) loop(money, counting, coins.tail)
+      else 0
+    }
+  loop(money, money, coins)
+  }
 }
