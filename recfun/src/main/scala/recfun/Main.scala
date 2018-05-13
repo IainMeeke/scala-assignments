@@ -8,14 +8,6 @@ object Main {
         print(pascal(col, row) + " ")
       println()
     }
-//    println("balanced:")
-//    println(balance("(()()()(()))".toList)) //true
-//    println(balance("(if (zero? x) max (/ 1 x))".toList)) //true
-//    println(balance("I told him (that it’s not (yet) done). (But he wasn’t listening)".toList)) //true
-//    println(balance(":-)".toList)) //false
-//    println(balance("())(".toList)) //false
-//    println(balance("()))()".toList)) //false
-    println(countChange(4, List(5,4,2,1)))
   }
 
   /**
@@ -28,7 +20,7 @@ object Main {
     */
   def balance(chars: List[Char]): Boolean = {
     def loop(b: Int, chars: List[Char]): Boolean = {
-      if (b < 0) false else if (chars.isEmpty && b == 0) true
+      if (b < 0 || (chars.isEmpty && b != 0)) false else if (chars.isEmpty && b == 0) true
       else {
         chars.head match {
           case '(' => loop(b + 1, chars.tail)
