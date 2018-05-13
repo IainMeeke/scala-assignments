@@ -15,7 +15,7 @@ object Main {
 //    println(balance(":-)".toList)) //false
 //    println(balance("())(".toList)) //false
 //    println(balance("()))()".toList)) //false
-    println(countChange(4, List(2,1)))
+    println(countChange(4, List(5,4,2,1)))
   }
 
   /**
@@ -45,14 +45,11 @@ object Main {
     * Exercise 3
     */
   def countChange(money: Int, coins: List[Int]): Int = {
-    def loop(money: Int, counting: Int, coins: List[Int]): Int = {
-      if(coins.isEmpty) 0
-      else if(counting <= 0) 0
-      else if((counting - coins.head) == 0) 1 + loop(money, money, coins.tail) + loop(money,money-coins.head, coins.tail)
-      else if((counting - coins.head) > 0) loop(money, counting - coins.head, coins)
-      else if((counting - coins.head) < 0) loop(money, counting, coins.tail)
-      else 0
-    }
-  loop(money, money, coins)
+    if(money == 0)
+      1
+    else if(money > 0 && coins.nonEmpty)
+      countChange(money - coins.head, coins) + countChange(money, coins.tail)
+    else
+      0
   }
 }
