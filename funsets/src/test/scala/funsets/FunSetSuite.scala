@@ -75,6 +75,7 @@ class FunSetSuite extends FunSuite {
 
   trait TestSets {
     val s1 = singletonSet(1)
+    val s1Inter = singletonSet(1)
     val s2 = singletonSet(2)
     val s3 = singletonSet(3)
   }
@@ -107,6 +108,47 @@ class FunSetSuite extends FunSuite {
       assert(contains(s, 1), "Union 1")
       assert(contains(s, 2), "Union 2")
       assert(!contains(s, 3), "Union 3")
+
+      val su = union(s,s3)
+      assert(contains(su, 3), "Union 3 does contain 3")
+    }
+  }
+
+  test("intersect contains elements only in both sets") {
+    new TestSets {
+      val s = intersect(s1, s2)
+      assert(!contains(s, 1), "Non valid Intersect 1")
+      assert(!contains(s, 2), "Non valid Intersect 2")
+      assert(!contains(s, 3), "Non valid Intersect 3")
+
+      val sPass = intersect(s1, s1Inter)
+      assert(contains(sPass, 1), "Valid Intersect")
+    }
+  }
+
+  test("Diff contains elements only in s and not in t") {
+    new TestSets {
+      val s = union(union(s1, s2), s3)
+      val t = s2
+      val d = diff(s, t)
+      assert(contains(s, 1), "s contains 1")
+      assert(contains(s, 2), "s contains 2")
+      assert(contains(s, 3), "s contains 3")
+
+      assert(contains(t, 2), "t contains 2")
+
+      assert(contains(d, 1), "d contains 1")
+      assert(!contains(d, 2), "d does not contain 2")
+      assert(contains(d, 3), "d contains 3")
+    }
+  }
+
+
+  test("forall only passes when all bounded integes within s satisfy p") {
+    new TestSets {
+      assert(forall(s1, x => x==1), "Predicate of element == element")
+      assert(!forall(s1, x => x==2), "Predicate of element == element")
+
     }
   }
 
