@@ -78,6 +78,7 @@ class FunSetSuite extends FunSuite {
     val s1Inter = singletonSet(1)
     val s2 = singletonSet(2)
     val s3 = singletonSet(3)
+    val s1000 = singletonSet(1000)
   }
 
   /**
@@ -151,6 +152,26 @@ class FunSetSuite extends FunSuite {
 
     }
   }
+
+  test("exists only passes when at lease one bounded integer within s satisfy p") {
+    new TestSets {
+      assert(exists(s1, x => x==1), "Predicate of element == element")
+      assert(!exists(s1, x => x==2), "Predicate of element == element")
+      assert(exists(s1000, x => x==1000), "Predicate of element == element")
+    }
+  }
+
+  test("map returns a new set transformed") {
+    new TestSets {
+      assert(contains(map(s1, x => x + 1), 2))
+      assert(contains(map(s2, x => x * 2), 4))
+      assert(contains(map(s2, x => x *  x * x), 8))
+      assert(contains(map(s1000, x => x - 1), 999))
+
+    }
+  }
+
+
 
 
 }
